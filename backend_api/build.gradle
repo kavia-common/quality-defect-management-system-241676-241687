@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+	id 'checkstyle'
 	id 'org.springframework.boot' version '3.4.8'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
@@ -21,11 +22,33 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+	// PDF export
+	implementation 'com.github.librepdf:openpdf:1.3.39'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
+
+	// MySQL runtime
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+checkstyle {
+	// Keep lint predictable in CI; use local config file.
+	toolVersion = '10.12.7'
+	configFile = file("${rootProject.projectDir}/config/checkstyle/checkstyle.xml")
+}
+
+tasks.withType(Checkstyle).configureEach {
+	// Don't fail build on warnings from template code; enforce only basic correctness.
+	ignoreFailures = false
+	maxWarnings = 0
 }
 
 tasks.named('test') {

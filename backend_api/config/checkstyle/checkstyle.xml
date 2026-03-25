@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!--
+  Minimal Checkstyle ruleset to satisfy CI linter task.
+  This intentionally enforces only a small set of safe, low-noise rules.
+-->
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="error"/>
+
+    <module name="TreeWalker">
+        <module name="AvoidStarImport"/>
+        <module name="UnusedImports"/>
+        <module name="NeedBraces"/>
+        <module name="EmptyStatement"/>
+        <module name="NoFinalizer"/>
+    </module>
+</module>
